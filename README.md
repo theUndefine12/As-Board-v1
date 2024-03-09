@@ -26,6 +26,9 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+
+[Postman](https://documenter.getpostman.com/view/26560018/2sA2xh2YPN) Documentation
+
 ## Installation
 
 ```bash
