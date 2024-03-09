@@ -6,6 +6,7 @@ import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
 import { faker } from '@faker-js/faker';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -31,8 +32,8 @@ export class AuthService {
             }
         })
 
-        const tokens = await this.issueTokens(user.id)
-        return{
+        const tokens = await this.issueTokens(user.id)        
+        return {
             user: this.userFields(user),
             ...tokens
         }
@@ -59,7 +60,7 @@ export class AuthService {
                 id: result.id
             }
         })
-
+        
         const tokens = await this.issueTokens(user.id)
         return {
             user: this.userFields(user),

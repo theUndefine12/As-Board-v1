@@ -2,6 +2,7 @@ import { Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nes
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { TokenDto } from './dto/token.dto';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {

@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String      @id @default(cuid())
+  email          String      @unique
+  password       String
+  iamge          String
+  title          String
+  dashboardCount Int         @default(0)
+  // comunityId     String?
+  Comment        Comment[]
+  Dashboard      Dashboard[]
+  // Comunity       Comunity?   @relation(fields: [comunityId], references: [id])
+}
+
+// model Comunity {
+//   id              String      @id @default(cuid())
+//   title           String
+//   usersCount      Int         @default(0)
+//   dashboardsCount Int         @default(0)
+//   dashboards      Dashboard[]
+//   users           User[]
+// }
+
+model Dashboard {
+  id         String    @id @default(cuid())
+  title      String
+  image      String
+  userId     String
+  // comunityId String?
+  Column     Column[]
+  // Comunity   Comunity? @relation(fields: [comunityId], references: [id])
+  owner      User      @relation(fields: [userId], references: [id])
+}
+
+model Column {
+  id          String    @id @default(cuid())
+  title       String
+  dashboardId String
+  Dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
+  Task        Task[]
+}
+
+model Task {
+  id          String        @id @default(cuid())
+  title       String
+  time        String
+  status      Status        @default(notwork)
+  isDone      Boolean       @default(false)
+  columnId    String
+  comments    Comment[]
+  description Description[]
+  column      Column        @relation(fields: [columnId], references: [id])
+}
+
+model Description {
+  id     String @id @default(cuid())
+  text   String
+  taskId String
+  task   Task   @relation(fields: [taskId], references: [id])
+}
+
+model Comment {
+  id     String  @id @default(cuid())
+  text   String
+  taskId String?
+  userId String
+  name   String
+  Task   Task?   @relation(fields: [taskId], references: [id])
+  owner  User    @relation(fields: [userId], references: [id])
+}
+
+// model Code {
+//   id             String   @id @default(cuid())
+//   email          String   @unique
+//   code           String
+//   expirationDate DateTime
+// }
+
+enum Status {
+  notwork
+  doing
+  success
+}
